@@ -1,0 +1,19 @@
+body {
+  background: url(https://as1.ftcdn.net/v2/jpg/04/26/09/02/1000_F_426090286_LAji3Rpk7735yGO5nPkxA4ZXnviC3NJF.jpg);
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+.weather-box {
+  border: 3px solid white;
+  padding: 50px;
+  border-radius: 30px;
+  background-color: rgba(256, 256, 256, 0.8);
+}
