@@ -3,6 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import WeatherBox from "./component/WeatherBox";
 import WeatherButton from "./component/WeatherButton";
+import ClipLoader from "react-spinners/ClipLoader";
 
 // 1.앱이 실행되자마자 현재위치기반의 날씨가 보인다
 // 2. 도시, 섭씨, 화씨, 날씨 상태정보가 보인다
@@ -14,6 +15,7 @@ import WeatherButton from "./component/WeatherButton";
 function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
+  const [loading, setLoading] = useState(true);
   const cities = ["paris", "new york", "london", "seoul"];
   const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition((position) => {
@@ -30,17 +32,25 @@ function App() {
     setWeather(data);
   };
 
-  useEffect(() => {
-    getCurrentLocation();
-  }, []);
+  const getWeatherByCity = async () => {
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ae9eee43fc282637a0cf709ef0ceda52&&units=metric`;
+    let response = await fetch(url);
+    let data = await response.json();
+    setWeather(data);
+  };
 
   useEffect(() => {
-    console.log("city?", city);
+    if (city == "") {
+      getCurrentLocation();
+    } else {
+      getWeatherByCity();
+    }
   }, [city]);
 
   return (
     <div>
       <div className="container">
+        <ClipLoader color="#f88c6b" loading={loading} size={150} />
         <WeatherBox weather={weather} />
         <WeatherButton cities={cities} setCity={setCity} />
       </div>
